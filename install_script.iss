@@ -26,9 +26,7 @@ LicenseFile=license\cclicense.txt
 Source: "GMDXv10InstallArchive.exe"; DestDir: "{tmp}"; Flags: deleteafterinstall nocompression; Components: core
 Source: "HDTPInstallArchive.exe"; DestDir: "{tmp}"; Flags: deleteafterinstall nocompression; Components: hdtp
 Source: "NVInstallArchive.exe"; DestDir: "{tmp}"; Flags: deleteafterinstall nocompression; Components: newvision
-Source: "7zip\7za.exe"; DestDir: "{tmp}"; Flags: recursesubdirs deleteafterinstall; Components: core
-Source: "7z1800\*"; DestDir: "{tmp}\7zhdtp"; Flags: recursesubdirs deleteafterinstall; Components: hdtp
-Source: "7z1800\*"; DestDir: "{tmp}\7znv"; Flags: recursesubdirs deleteafterinstall; Components: newvision
+Source: "7zip\7za.exe"; DestDir: "{tmp}"; Flags: deleteafterinstall nocompression; Components: core
 
 [Types]
 Name: "full"; Description: "Full Installation"
@@ -40,12 +38,13 @@ Name: "hdtp"; Description: "HDTP Models"; Types: full custom
 Name: "newvision"; Description: "New Vision Textures"; Types: full custom
 
 [Run]
-Filename: "{tmp}\7zcore\7z.exe"; Parameters: "x {tmp}\GMDXv10InstallArchive.exe -o""{app}"""; StatusMsg: "Extracting core GMDX files..."
-Filename: "{tmp}\7zhdtp\7z.exe"; Parameters: "x {tmp}\HDTPInstallArchive.exe -o""{app}"""; StatusMsg: "Extracting HDTP files..."; Flags: skipifdoesntexist
-Filename: "{tmp}\7znv\7z.exe"; Parameters: "x {tmp}\NVInstallArchive.exe -o""{app}"""; StatusMsg: "Extracting New Vision files..."; Flags: skipifdoesntexist
+Filename: "{tmp}\7za.exe"; Parameters: "x {tmp}\GMDXv10InstallArchive.exe -o""{app}"" -y"; StatusMsg: "Extracting core GMDX files..."; Components: core
+Filename: "{tmp}\7za.exe"; Parameters: "x {tmp}\HDTPInstallArchive.exe -o""{app}"" -y"; StatusMsg: "Extracting HDTP files..."; Components: hdtp
+Filename: "{tmp}\7za.exe"; Parameters: "x {tmp}\NVInstallArchive.exe -o""{app}"" -y"; StatusMsg: "Extracting New Vision files..."; Components: newvision
+Filename: "{app}\System\GMDXv10.exe"; Flags: postinstall
 
 [Tasks]
-Name: desktopicon; Description: "Create a &desktop icon"; Flags: unchecked
+Name: desktop_icon; Description: "Create a &desktop icon"; Flags: unchecked
 
 [Icons]
-Name: "{commondesktop}\{#SetupSetting("AppName")}"; Filename: "{app}\System\GMDXv10.exe"; Tasks: desktopicon
+Name: "{commondesktop}\{#SetupSetting("AppName")}"; Filename: "{app}\System\GMDXv10.exe"; Tasks: desktop_icon
