@@ -23,10 +23,10 @@ DisableProgramGroupPage=yes
 LicenseFile=license\cclicense.txt
 
 [Files]
+Source: "7zip\7za.exe"; DestDir: "{tmp}"; Flags: deleteafterinstall nocompression; Components: core
 Source: "GMDXv10InstallArchive.exe"; DestDir: "{tmp}"; Flags: deleteafterinstall nocompression; Components: core
 Source: "HDTPInstallArchive.exe"; DestDir: "{tmp}"; Flags: deleteafterinstall nocompression; Components: hdtp
 Source: "NVInstallArchive.exe"; DestDir: "{tmp}"; Flags: deleteafterinstall nocompression; Components: newvision
-Source: "7zip\7za.exe"; DestDir: "{tmp}"; Flags: deleteafterinstall nocompression; Components: core
 
 [Types]
 Name: "full"; Description: "Full Installation"
