@@ -38,9 +38,12 @@ Name: "hdtp"; Description: "HDTP Models"; Types: full custom
 Name: "newvision"; Description: "New Vision Textures"; Types: full custom
 
 [Run]
-Filename: "{tmp}\7za.exe"; Parameters: "x {tmp}\GMDXv10InstallArchive.exe -o""{app}"" -y"; StatusMsg: "Extracting core GMDX files..."; Components: core
-Filename: "{tmp}\7za.exe"; Parameters: "x {tmp}\HDTPInstallArchive.exe -o""{app}"" -y"; StatusMsg: "Extracting HDTP files..."; Components: hdtp
-Filename: "{tmp}\7za.exe"; Parameters: "x {tmp}\NVInstallArchive.exe -o""{app}"" -y"; StatusMsg: "Extracting New Vision files..."; Components: newvision
+Filename: "{tmp}\7za.exe"; Parameters: "x {tmp}\GMDXv10InstallArchive.exe -o""{app}"" -y"; Flags: runhidden; \
+    StatusMsg: "Extracting Core GMDX files..."; Components: core; BeforeInstall: SetMarqueeProgress()
+Filename: "{tmp}\7za.exe"; Parameters: "x {tmp}\HDTPInstallArchive.exe -o""{app}"" -y"; Flags: runhidden; \
+    StatusMsg: "Extracting HDTP files..."; Components: hdtp
+Filename: "{tmp}\7za.exe"; Parameters: "x {tmp}\NVInstallArchive.exe -o""{app}"" -y"; Flags: runhidden; \
+    StatusMsg: "Extracting New Vision files... (This may take some time)"; Components: newvision
 Filename: "{app}\System\GMDXv10.exe"; Flags: postinstall
 
 [Tasks]
@@ -48,3 +51,9 @@ Name: desktop_icon; Description: "Create a &desktop icon"; Flags: unchecked
 
 [Icons]
 Name: "{commondesktop}\{#SetupSetting("AppName")}"; Filename: "{app}\System\GMDXv10.exe"; Tasks: desktop_icon
+
+[Code]
+procedure SetMarqueeProgress();
+begin
+  WizardForm.ProgressGauge.Style := npbstMarquee;
+end;
