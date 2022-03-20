@@ -28,9 +28,9 @@ LicenseFile=license\cclicense.txt
 
 [Files]
 Source: "7zip\7za.exe"; DestDir: "{tmp}"; Flags: deleteafterinstall nocompression; Components: core
-Source: "GMDXv10InstallArchive.exe"; DestDir: "{tmp}"; Flags: deleteafterinstall nocompression; Components: core
-Source: "HDTPInstallArchive.exe"; DestDir: "{tmp}"; Flags: deleteafterinstall nocompression; Components: hdtp
-Source: "NVInstallArchive.exe"; DestDir: "{tmp}"; Flags: deleteafterinstall nocompression; Components: newvision
+Source: "GMDXv10InstallArchive.7z"; DestDir: "{tmp}"; DestName: "CoreFiles"; Flags: deleteafterinstall nocompression; Components: core
+Source: "HDTPInstallArchive.exe"; DestDir: "{tmp}"; DestName: "HDTPFiles"; Flags: deleteafterinstall nocompression; Components: hdtp
+Source: "NVInstallArchive.exe"; DestDir: "{tmp}"; DestName: "NVFiles"; Flags: deleteafterinstall nocompression; Components: newvision
 
 [Types]
 Name: "full"; Description: "Full Installation"
@@ -42,11 +42,11 @@ Name: "hdtp"; Description: "HDTP Models"; Types: full custom
 Name: "newvision"; Description: "New Vision Textures"; Types: full custom
 
 [Run]
-Filename: "{tmp}\7za.exe"; Parameters: "x {tmp}\GMDXv10InstallArchive.exe -o""{app}"" -aoa"; Flags: runhidden; \
+Filename: "{tmp}\7za.exe"; Parameters: "x {tmp}\CoreFiles -o""{app}"" -aoa"; Flags: runhidden; \
     StatusMsg: "Extracting Core GMDX files..."; Components: core; BeforeInstall: SetMarqueeProgress()
-Filename: "{tmp}\7za.exe"; Parameters: "x {tmp}\HDTPInstallArchive.exe -o""{app}"" -aoa"; Flags: runhidden; \
+Filename: "{tmp}\7za.exe"; Parameters: "x {tmp}\HDTPFiles -o""{app}"" -aoa"; Flags: runhidden; \
     StatusMsg: "Extracting HDTP files..."; Components: hdtp
-Filename: "{tmp}\7za.exe"; Parameters: "x {tmp}\NVInstallArchive.exe -o""{app}"" -aoa"; Flags: runhidden; \
+Filename: "{tmp}\7za.exe"; Parameters: "x {tmp}\NVFiles -o""{app}"" -aoa"; Flags: runhidden; \
     StatusMsg: "Extracting New Vision files... (This may take some time)"; Components: newvision
 Filename: "{app}\System\GMDXv10.exe"; Flags: postinstall
 
